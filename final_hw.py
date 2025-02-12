@@ -3,7 +3,7 @@
 # FILENAME: final_hw.py 
 # SPECIFICATION: For question 8 in the hw1 to find 2 most similar documents using cosine similarity 
 # FOR: CS 5990 (Advanced Data Mining) - Assignment #1
-# TIME SPENT: how long it took you to complete the assignment
+# TIME SPENT: Around 4 to 5 hours (yes I'm a little slow)
 # -----------------------------------------------------------*/
 #IMPORTANT NOTE: DO NOT USE ANY ADVANCED PYTHON LIBRARY TO COMPLETE THIS CODE SUCH
 # AS numpy,
@@ -13,7 +13,7 @@
 import csv
 from sklearn.metrics.pairwise import cosine_similarity
 
-def read_documents(): 
+def read_documents(): #Provided read file 
     documents = []
     #reading the documents in a csv file
     with open('cleaned_documents.csv', 'r') as csvfile:
@@ -41,19 +41,19 @@ def build_document_term_matrix(document):
     word_index = {word: i for i, word in enumerate(distinct_words)}
 
     for doc in document: 
-        vector = [0] * len(distinct_words)
-        words = doc[1].split()
-        for word in words: 
+        vector = [0] * len(distinct_words) #Initilize vector of 0 with the length of the distinct_word 
+        words = doc[1].split() #getting the list of word from the document 
+        for word in words:  #checking each words from the document to see if it's in the list 
             if word in word_index: 
                 vector[word_index[word]] += 1 
-        docTermMatrix.append(vector)
+        docTermMatrix.append(vector) #update the matrix with the calculated vector 
 
-     # Write term matrix to file so I can check it 
-    with open('term_matrix_output.csv', 'w', encoding='utf-8') as f:
-        writer = csv.writer(f)
-        writer.writerow(["Document"] + list(distinct_words))  # Header row with words
-        for i, row in enumerate(docTermMatrix):
-            writer.writerow([f"Doc {i+1}"] + row)
+    # Write term matrix to file so I can check it 
+    # with open('term_matrix_output.csv', 'w', encoding='utf-8') as f:
+    #     writer = csv.writer(f)
+    #     writer.writerow(["Document"] + list(distinct_words))  # Header row with words
+    #     for i, row in enumerate(docTermMatrix):
+    #         writer.writerow([f"Doc {i+1}"] + row)
 
 
     return docTermMatrix
@@ -88,8 +88,6 @@ def find_most_similar_document(docTermMatrix):
 # The most similar documents are document 10 and document 100 with cosine
 # similarity = x
 # --> Add your Python code here
-
-
 documents = read_documents()
 term_matrix = build_document_term_matrix(documents)
 most_similar_docs, max_similarity = find_most_similar_document(term_matrix)
